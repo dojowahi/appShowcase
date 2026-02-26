@@ -1,9 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
 from typing import List, Optional
 from google.cloud import firestore
-from google.api_core.exceptions import NotFound
+import os
 
 app = FastAPI()
 
@@ -101,3 +103,17 @@ async def delete_demo(demo_id: str):
         raise he
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete demo: {str(e)}")
+
+# Serve Static React App
+# Cloud Run will run from /app, and copy the React build to /app/dist
+static_dir = os.path.join(os.path.dirname(__file__), "dist")
+if os.path.exists(static_dir):
+    app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
+
+@app.exception_handler(404)
+async def custom_404_handler(request, __):
+    if request.url.path.startswith("/demos") or request.url.path.startswith("/assets"):
+        return JSONResponse({"detail": "Not Found"}, status_code=404)
+    if os.path.exists(os.path.join(static_dir, "index.html")):
+        return FileResponse(os.path.join(static_dir, "index.html"))
+    return JSONResponse({"detail": "Not Found"}, status_code=404)
