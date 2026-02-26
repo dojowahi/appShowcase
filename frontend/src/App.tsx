@@ -13,7 +13,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchDemos = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/demos');
+        const response = await fetch('/demos');
         if (response.ok) {
           const data = await response.json();
           setDemos(data);
@@ -45,7 +45,7 @@ const App: React.FC = () => {
 
   const handleAddDemo = async (newDemo: Demo) => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/demos', {
+      const response = await fetch('/demos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newDemo),
@@ -62,7 +62,7 @@ const App: React.FC = () => {
 
   const handleUpdateDemo = async (updatedDemo: Demo) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/demos/${updatedDemo.id}`, {
+      const response = await fetch(`/demos/${updatedDemo.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedDemo),
@@ -80,7 +80,7 @@ const App: React.FC = () => {
   const handleDeleteDemo = async (id: string) => {
     if (confirm('Are you sure you want to delete this demo?')) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/demos/${id}`, {
+        const response = await fetch(`/demos/${id}`, {
           method: 'DELETE',
         });
         if (response.ok) {

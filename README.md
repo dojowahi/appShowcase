@@ -4,17 +4,15 @@ A stunning portfolio application designed to showcase AI-powered cloud solutions
 
 ## Features
 
-- **Demo Showcase:** View a collection of cloud run demos and solutions with thumbnails, tech stacks, and descriptions.
+- **Demo Showcase:** View a collection of cloud run demos and solutions, tech stacks, and descriptions.
 - **Admin Dashboard:** A built-in administration panel at `/admin` to add, edit, delete, and reorder showcased demos.
-- **Responsive Design:** A premium, modern web interface with subtle micro-animations and Google's corporate color accents.
+- **Responsive Design:** A premium, modern web interface with subtle micro-animations 
 - **No-SQL Storage:** Leverages Google Cloud Firestore for persistent storage of demo metadata.
 
 ## Tech Stack
 
 **Frontend:**
-- [React](https://react.dev/) 19
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
+- [React](https://react.dev/) 
 
 **Backend:**
 - [FastAPI](https://fastapi.tiangolo.com/) (Python)
@@ -37,13 +35,15 @@ gcloud auth application-default login
 
 ### 2. Frontend Setup
 
-Install the Node.js dependencies:
+Navigate to the `frontend` directory and install the Node.js dependencies:
 ```bash
+cd frontend
 npm install
 ```
 
 Start the frontend development server:
 ```bash
+cd frontend
 npm run dev
 ```
 
@@ -68,6 +68,7 @@ The application is structured to be containerized and deployed to **Google Cloud
 
 1. Build the frontend:
 ```bash
+cd frontend
 npm run build
 ```
 2. Build the Docker container (requires Dockerfile) and deploy via GCP Cloud Build / Cloud Run.
