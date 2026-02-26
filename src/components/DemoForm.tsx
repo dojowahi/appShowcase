@@ -26,9 +26,23 @@ const DemoForm: React.FC<DemoFormProps> = ({ demo, onSubmit, onCancel }) => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setImagePreview(base64String);
-        setFormData({ ...formData, thumbnail: base64String });
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800; // max width for standard thumbnails
+          const scaleSize = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scaleSize;
+
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          // Compress to JPEG format with 0.7 quality to guarantee it fits in 1MB Firestore limit
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+          setImagePreview(compressedBase64);
+          setFormData({ ...formData, thumbnail: compressedBase64 });
+        };
+        img.src = reader.result as string;
       };
       reader.readAsDataURL(file);
     }
