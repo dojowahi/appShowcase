@@ -1,73 +1,73 @@
-# React + TypeScript + Vite
+# GCP Solution Showcase
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A stunning portfolio application designed to showcase AI-powered cloud solutions and modern web applications built on Google Cloud Platform (GCP). It features a sleek, responsive user interface inspired by Google's Material Design, presenting demos in an interactive grid with detailed views.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Demo Showcase:** View a collection of cloud run demos and solutions with thumbnails, tech stacks, and descriptions.
+- **Admin Dashboard:** A built-in administration panel at `/admin` to add, edit, delete, and reorder showcased demos.
+- **Responsive Design:** A premium, modern web interface with subtle micro-animations and Google's corporate color accents.
+- **No-SQL Storage:** Leverages Google Cloud Firestore for persistent storage of demo metadata.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Frontend:**
+- [React](https://react.dev/) 19
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
 
-## Expanding the ESLint configuration
+**Backend:**
+- [FastAPI](https://fastapi.tiangolo.com/) (Python)
+- Google Cloud Firestore (`google-cloud-firestore`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (v18 or newer recommended)
+- Python 3.9+
+- Google Cloud CLI (`gcloud`)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Setup & Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. GCP Authentication
+
+Ensure your local environment is authenticated with Google Cloud to allow the backend to access Firestore:
+```bash
+gcloud auth application-default login
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Frontend Setup
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Install the Node.js dependencies:
+```bash
+npm install
 ```
+
+Start the frontend development server:
+```bash
+npm run dev
+```
+
+### 3. Backend Setup
+
+Navigate to the `backend` directory, set up a virtual environment, and install the Python dependencies:
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Run the FastAPI backend:
+```bash
+fastapi dev main.py
+```
+
+## Deployment
+
+The application is structured to be containerized and deployed to **Google Cloud Run**. The FastAPI backend is configured to serve the built React static files (`dist/`) in a production environment.
+
+1. Build the frontend:
+```bash
+npm run build
+```
+2. Build the Docker container (requires Dockerfile) and deploy via GCP Cloud Build / Cloud Run.
