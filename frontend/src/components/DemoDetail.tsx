@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import type { Demo } from '../data/demos';
 
 interface DemoDetailProps {
@@ -41,15 +42,15 @@ const DemoDetail: React.FC<DemoDetailProps> = ({ demo, onBack }) => {
           <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', fontWeight: 500, color: 'var(--text-primary)' }}>
             {demo.title}
           </h2>
-          <p style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '2rem' }}>
-            {demo.longDescription}
-          </p>
+          <div className="prose" style={{ color: 'var(--text-primary)', fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '2rem' }}>
+            <ReactMarkdown>{demo.longDescription}</ReactMarkdown>
+          </div>
 
           <div style={{ background: '#f8f9fa', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--surface-border)', marginBottom: '2rem' }}>
             <h4 style={{ color: 'var(--google-blue)', marginBottom: '0.8rem', fontWeight: 500 }}>Technical Implementation</h4>
-            <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-              {demo.techDetails}
-            </p>
+            <div className="prose prose-sm" style={{ color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6' }}>
+              <ReactMarkdown>{demo.techDetails}</ReactMarkdown>
+            </div>
           </div>
 
           <a href={demo.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.1rem' }}>

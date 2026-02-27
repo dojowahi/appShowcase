@@ -18,6 +18,23 @@ A stunning portfolio application designed to showcase AI-powered cloud solutions
 - [FastAPI](https://fastapi.tiangolo.com/) (Python)
 - Google Cloud Firestore (`google-cloud-firestore`)
 
+## Architecture
+
+```mermaid
+graph TD
+    User([User]) -->|HTTPS Request| CloudRun[Google Cloud Run Container]
+    
+    subgraph CloudRun[Google Cloud Run :8080]
+        FastAPI_App[FastAPI Backend & Static File Server]
+        React_Dist[React Frontend Build /dist]
+        
+        FastAPI_App -- "Serves Static UI" --> React_Dist
+        FastAPI_App -- "Handles API Requests" --> FastAPI_App
+    end
+    
+    FastAPI_App -- "Reads/Writes Data" --> Firestore[(Google Cloud Firestore)]
+```
+
 ## Prerequisites
 
 - Node.js (v18 or newer recommended)
