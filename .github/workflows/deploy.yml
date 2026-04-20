@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: gen-ai-4all
-  SERVICE_NAME: app-showcase
+  SERVICE_NAME: appshowcase
   REGION: us-central1
   SERVICE_ACCOUNT: genai-592@gen-ai-4all.iam.gserviceaccount.com
 
@@ -65,6 +65,7 @@ jobs:
           gcloud run deploy ${{ env.SERVICE_NAME }} \
             --source . \
             --region ${{ env.REGION }} \
-            --allow-unauthenticated \
+            --no-allow-unauthenticated \
+            --ingress=internal-and-cloud-load-balancing \
             --service-account ${{ env.SERVICE_ACCOUNT }} \
             --impersonate-service-account ${{ env.SERVICE_ACCOUNT }}

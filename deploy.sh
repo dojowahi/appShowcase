@@ -2,7 +2,7 @@
 
 # Configuration
 PROJECT_ID=$(gcloud config get-value project)
-SERVICE_NAME="app-showcase"
+SERVICE_NAME="appshowcase"
 REGION="us-central1"
 SERVICE_ACCOUNT="genai-592@gen-ai-4all.iam.gserviceaccount.com"
 
@@ -13,7 +13,7 @@ echo "Using service account: $SERVICE_ACCOUNT"
 gcloud run deploy $SERVICE_NAME \
     --source . \
     --region $REGION \
-    --allow-unauthenticated \
+    --no-allow-unauthenticated \
     --service-account $SERVICE_ACCOUNT \
     --impersonate-service-account $SERVICE_ACCOUNT
 
